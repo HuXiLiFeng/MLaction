@@ -8,9 +8,9 @@ from sklearn import datasets, cross_validation, linear_model, svm
 
 def load_data():
     # 这里用来分类，用的是鸢尾花数据集
-    diabetes = datasets.load_iris()
+    data = datasets.load_iris()
     return cross_validation.train_test_split(
-        diabetes.data, diabetes.target, test_size=0.25, random_state=0)
+        data.data, data.target, test_size=0.25, random_state=0)
 
 
 def test_LinearSVC(X_train, X_test, y_train, y_test):
