@@ -156,18 +156,69 @@ def testGradientBoostingRegressor(*data):
     ax.legend(loc='best')
     plt.show()
 
+def testRandomForestClassifier(*data):
+    estimators=np.arange(1,100,step=2)
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    trainingScore=[]
+    testingScore=[]
+    # 还可以调参
+    # featuresNum=["auto","sqrt","log2",5,0.6]
+    for estimator in estimators:
+        bdt = ensemble.RandomForestClassifier(n_estimators=estimator,max_features="log2",max_depth=6)
+        bdt.fit(X_train, y_train)
+        trainingScore.append(bdt.score(X_train,y_train))
+        testingScore.append(bdt.score(X_test,y_test))
+    ax.plot(estimators, trainingScore, label="Training Score")
+    ax.plot(estimators, testingScore, label="Testing Score")
+    ax.set_xlabel("n_estimators")
+    ax.set_ylabel("Score")
+    ax.legend(loc='best')
+    ax.set_title("RandomForestClassifier: n_estimators VS. Score")
+    plt.show()
+
+def testRandomForestRegressor(*data):
+    estimators = np.arange(1, 100, step=2)
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    trainingScore = []
+    testingScore = []
+    # 还可以调参
+    # featuresNum=["auto","sqrt","log2",5,0.6]
+    for estimator in estimators:
+        bdt = ensemble.RandomForestRegressor(n_estimators=estimator, max_features="log2", max_depth=6)
+        bdt.fit(X_train, y_train)
+        trainingScore.append(bdt.score(X_train, y_train))
+        testingScore.append(bdt.score(X_test, y_test))
+    ax.plot(estimators, trainingScore, label="Training Score")
+    ax.plot(estimators, testingScore, label="Testing Score")
+    ax.set_xlabel("n_estimators")
+    ax.set_ylabel("Score")
+    ax.legend(loc='best')
+    ax.set_title("RandomForestRegressor: n_estimators VS. Score")
+    plt.show()
+
+
+
 
 if __name__ == '__main__':
     # 用于分类的数据
     # X_train, X_test, y_train, y_test=loadData()
     # testAdaBoostClassifier(X_train,X_test,y_train,y_test)
     # testClassifyLearningRate(X_train, X_test, y_train, y_test)
+    # testGradientBoostingClassifier(X_train, X_test, y_train, y_test)
+    # testRandomForestClassifier(X_train, X_test, y_train, y_test)
+
+
+
     # 用于回归的数据
     X_train, X_test, y_train, y_test = loadRegressorData()
     # testAdaBoostRegressor(X_train, X_test, y_train, y_test)
     # testAdaBoostRegressorEstimators(X_train, X_test, y_train, y_test)
-    # testGradientBoostingClassifier(X_train, X_test, y_train, y_test)
-    testGradientBoostingRegressor(X_train, X_test, y_train, y_test)
+    # testGradientBoostingRegressor(X_train, X_test, y_train, y_test)
+    testRandomForestRegressor(X_train, X_test, y_train, y_test)
+
+
 
 
 
