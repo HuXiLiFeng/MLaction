@@ -33,8 +33,9 @@ def InitBinaryTree(dataSource, length):
     for x in xrange(1,length):
         node = BTNode(dataSource[x])
         InsertElementBinaryTree(root, node)
-    return root
     print 'Done...'
+    return root
+
 
 # pre-order
 def PreorderTraversalBinaryTree(root):
