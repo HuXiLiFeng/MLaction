@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# 实现PCA降维方法
+# 手动实现PCA降维方法
 import numpy as np
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -10,16 +10,16 @@ np.random.seed(4294967295)
 mu_vec1 = np.array([0, 0, 0])
 cov_mat1 = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 class1_sample = np.random.multivariate_normal(mu_vec1, cov_mat1, 20).T
-assert class1_sample.shape == (3, 20)  # 检验数据的维度是否为3*20，若不为3*20，则抛出异常
+# 检验数据的维度是否为3*20，若不为3*20，则抛出异常
+assert class1_sample.shape == (3, 20)
 
 mu_vec2 = np.array([1, 1, 1])
 cov_mat2 = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 class2_sample = np.random.multivariate_normal(mu_vec2, cov_mat2, 20).T
-assert class1_sample.shape == (3, 20)  # 检验数据的维度是否为3*20，若不为3*20，则抛出异常
+# 检验数据的维度是否为3*20，若不为3*20，则抛出异常
+assert class1_sample.shape == (3, 20)
 print class1_sample
 print class2_sample
-
-
 
 fig = plt.figure(figsize=(8,8))
 #ax = fig.add_subplot(1,1,1, projection='3d')
@@ -58,7 +58,8 @@ print 'Covariance Matrix:', '\n', cov_mat
 
 # 通过散布矩阵计算特征值和特征向量
 eig_val_sc, eig_vec_sc = np.linalg.eig(scatter_matrix)
-
+print eig_val_sc
+print eig_vec_sc
 # 通过协方差矩阵计算特征值和特征向量
 eig_val_cov, eig_vec_cov = np.linalg.eig(cov_mat)
 
@@ -74,6 +75,7 @@ for i in range(len(eig_val_sc)):
     print(40 * '-')
 
 # 生成（特征向量，特征值）元祖
+# 特征矩阵的列表示一个特征向量
 eig_pairs = [(np.abs(eig_val_sc[i]), eig_vec_sc[:,i]) for i in range(len(eig_val_sc))]
 
 #对（特征向量，特征值）元祖按照降序排列
@@ -84,15 +86,10 @@ for i in eig_pairs:
     print(i[0])
 
 matrix_w = np.hstack((eig_pairs[0][1].reshape(3,1), eig_pairs[1][1].reshape(3,1)))
-print('Matrix W:\n', matrix_w)
-
-matrix_w = np.hstack((eig_pairs[0][1].reshape(3,1), eig_pairs[1][1].reshape(3,1)))
-print('Matrix W:\n', matrix_w)
-
+print 'Matrix W:','\n', matrix_w
 
 transformed = matrix_w.T.dot(all_samples)
 assert transformed.shape == (2,40), "The matrix is not 2x40 dimensional."
-
 
 plt.plot(transformed[0,0:20], transformed[1,0:20], 'o', markersize=7, color='blue', alpha=0.5, label='class1')
 plt.plot(transformed[0,20:40], transformed[1,20:40], '^', markersize=7, color='red', alpha=0.5, label='class2')
