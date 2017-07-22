@@ -7,7 +7,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn import datasets,cross_validation,ensemble
+from sklearn import datasets,cross_validation,ensemble,model_selection
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import LinearSVR
 
@@ -16,12 +16,12 @@ def loadData():
     # 在分类问题中，用的是手写识别数据集Digit dataset
     digits = datasets.load_digits()
     # 最后一个参数stratify表示分层抽样
-    return cross_validation.train_test_split(digits.data, digits.target, test_size=0.25, random_state=1,
+    return model_selection.train_test_split(digits.data, digits.target, test_size=0.25, random_state=1,
                                              stratify = digits.target)
 def loadRegressorData():
     # 糖尿病人数据集，用于回归
     diabetes = datasets.load_diabetes()
-    return cross_validation.train_test_split(diabetes.data, diabetes.target, test_size=0.25, random_state=1)
+    return model_selection.train_test_split(diabetes.data, diabetes.target, test_size=0.25, random_state=1)
 
 def testAdaBoostClassifier(X_train,X_test,y_train,y_test):
     # 测试不同基分类器的效果
